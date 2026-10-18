@@ -16,8 +16,9 @@ int search_onlinked(hashtable_t *ht, char *key)
     node_t *prev = NULL;
 
     while (tmp != NULL) {
-        if (tmp->hash_key == hash_key) {
+        if (tmp->hash_key == hash_key && my_strcmp(tmp->key, key) == 0) {
             prev->next = tmp->next;
+            free(tmp->key);
             free(tmp);
             return 0;
         }
@@ -42,9 +43,11 @@ int ht_delete(hashtable_t *ht, char *key)
         return 84;
     if (ht[index].head == NULL)
         return 84;
-    if (ht[index].head->hash_key == hash_key) {
+    if (ht[index].head->hash_key == hash_key
+        && my_strcmp(ht[index].head->key, key) == 0) {
         to_delete = ht[index].head;
         ht[index].head = ht[index].head->next;
+        free(to_delete->key);
         free(to_delete);
         return 0;
     }

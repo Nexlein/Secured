@@ -22,7 +22,7 @@ char *ht_search(hashtable_t *ht, char *key)
         return "Error: NULL key.";
     tmp = ht[index].head;
     while (tmp != NULL) {
-        if (tmp->hash_key == hash_key)
+        if (tmp->hash_key == hash_key && my_strcmp(tmp->key, key) == 0)
             return tmp->value;
         tmp = tmp->next;
     }
