@@ -11,6 +11,7 @@
 
 typedef struct node {
     int id;
+    char *key;
     char *value;
     int hash_key;
     struct node *next;

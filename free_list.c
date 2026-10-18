@@ -15,6 +15,7 @@ void free_list(node_t *head)
     while (tmp != NULL) {
         previous = tmp;
         tmp = tmp->next;
+        free(previous->key);
         free(previous);
     }
 }

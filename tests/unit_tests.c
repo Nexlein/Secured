@@ -224,3 +224,36 @@ Test (delete_hashtable, delete_hashtable_null_ht, .init=redirect_std)
 {
     delete_hashtable(NULL);
 }
+
+Test (ht_collision, colliding_keys_stay_separate, .init=redirect_std)
+{
+    hashtable_t *ht = new_hashtable(&hash, 10);
+
+    cr_assert_eq(hash("nexus", 10), hash("vision", 10));
+    ht_insert(ht, "nexus", "first");
+    ht_insert(ht, "vision", "second");
+    cr_assert_str_eq(ht_search(ht, "nexus"), "first");
+    cr_assert_str_eq(ht_search(ht, "vision"), "second");
+    ht_insert(ht, "nexus", "updated");
+    cr_assert_str_eq(ht_search(ht, "nexus"), "updated");
+    cr_assert_str_eq(ht_search(ht, "vision"), "second");
+    cr_assert_eq(ht_delete(ht, "vision"), 0);
+    cr_assert_null(ht_search(ht, "vision"));
+    cr_assert_str_eq(ht_search(ht, "nexus"), "updated");
+    ht_insert(ht, "vision", "second");
+    cr_assert_eq(ht_delete(ht, "nexus"), 0);
+    cr_assert_null(ht_search(ht, "nexus"));
+    cr_assert_str_eq(ht_search(ht, "vision"), "second");
+    delete_hashtable(ht);
+}
+
+Test (ht_collision, key_is_copied, .init=redirect_std)
+{
+    hashtable_t *ht = new_hashtable(&hash, 10);
+    char key[] = "nexus";
+
+    ht_insert(ht, key, "value");
+    key[0] = 'x';
+    cr_assert_str_eq(ht_search(ht, "nexus"), "value");
+    delete_hashtable(ht);
+}
