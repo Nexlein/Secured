@@ -16,6 +16,7 @@ The project is written in C and adheres to modular programming principles, ensur
   - Delete a key-value pair (`ht_delete`).
   - Dump the contents of the hashtable (`ht_dump`).
   - Delete the entire hashtable (`delete_hashtable`).
+  - Keys that hash to the same value are chained in the same bucket and told apart by comparing the key strings.
 
 - **Unit Testing**:
   - Extensive unit tests using the Criterion framework to ensure correctness and reliability.
@@ -24,6 +25,11 @@ The project is written in C and adheres to modular programming principles, ensur
 
 ## Compilation
 To compile the project, use the provided `Makefile`.
+
+### Requirements
+- `gcc` and `make` to build the library.
+- [Criterion](https://github.com/Snaipe/Criterion) to build and run the unit tests (`libcriterion-dev` on Debian/Ubuntu).
+- [gcovr](https://gcovr.com) for the coverage report printed after the tests (`pip install gcovr`). Without it, the tests still run, but `make tests_run` ends with an error at the coverage step.
 
 ### Build the Library
 ```bash
@@ -35,7 +41,7 @@ This will generate the `libhashtable.a` static library.
 ```bash
 make tests_run
 ```
-This will compile and execute the unit tests, providing coverage reports.
+This will compile and execute the unit tests, then print coverage reports with `gcovr`.
 
 ### Clean Build Files
 ```bash

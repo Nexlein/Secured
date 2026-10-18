@@ -5,13 +5,13 @@
 ## Bah on Make le File
 ##
 
-SRC	=	$(shell find -name "*.c")
+SRC	=	$(wildcard *.c)
 
 OBJ	=	$(SRC:.c=.o)
 
 NAME 	=	libhashtable.a
 
-SRC_UNIT	=	$(shell find -name "*.c" ! -name "main.c")
+SRC_UNIT	=	$(SRC) tests/unit_tests.c
 
 OBJ_UNIT	=	$(SRC_UNIT:.c=.o)
 
@@ -27,7 +27,7 @@ $(NAME):	$(OBJ)
 	ar rc $(NAME) $(OBJ)
 
 clean:
-	$(RM) $(OBJ)
+	$(RM) $(OBJ_UNIT)
 
 fclean: clean
 	$(RM) $(NAME)
@@ -52,7 +52,7 @@ $(UNIT_NAME):	$(OBJ_UNIT)
 
 clean_unit:
 	$(RM) $(OBJ_UNIT)
-	$(RM) .$(UNIT_NAME)
+	$(RM) $(UNIT_NAME)
 	$(RM) *gcda
 	$(RM) *gcno
 	$(RM) tests/*gcda

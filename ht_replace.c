@@ -20,7 +20,7 @@ int ht_replace(hashtable_t *ht, char *value, char *key)
     node_t *tmp = ht[index].head;
 
     while (tmp != NULL) {
-        if (tmp->hash_key == hash_key) {
+        if (tmp->hash_key == hash_key && my_strcmp(tmp->key, key) == 0) {
             tmp->value = value;
             return 0;
         }

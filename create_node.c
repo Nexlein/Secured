@@ -21,6 +21,11 @@ node_t *create_node(char *key, char *value, hashtable_t *ht)
     new_node = malloc(sizeof(node_t));
     if (new_node == NULL)
         return NULL;
+    new_node->key = my_strdup(key);
+    if (new_node->key == NULL) {
+        free(new_node);
+        return NULL;
+    }
     new_node->id = ht->save_id;
     ht->save_id++;
     new_node->value = value;

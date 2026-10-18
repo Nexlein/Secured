@@ -21,6 +21,8 @@ int ht_insert(hashtable_t *ht, char *key, char *value)
     if (ht_replace(ht, value, key) == 0)
         return 0;
     new_head = create_node(key, value, ht);
+    if (new_head == NULL)
+        return 84;
     new_head->next = ht[index].head;
     ht[index].head = new_head;
     return 0;
